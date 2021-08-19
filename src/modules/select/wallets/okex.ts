@@ -16,23 +16,15 @@ function okex(
     svg,
     wallet: async (helpers: Helpers) => {
       const {
-        getProviderName,
         createModernProviderInterface,
-        createLegacyProviderInterface
       } = helpers
 
       const provider =
-        (window as any).ethereum ||
-        ((window as any).web3 && (window as any).web3.currentProvider)
-
+        (window as any).okexchain
       return {
         provider,
         interface:
-          provider && getProviderName(provider) === 'okexchain'
-            ? typeof provider.enable === 'function'
-              ? createModernProviderInterface(provider)
-              : createLegacyProviderInterface(provider)
-            : null
+          provider && createModernProviderInterface(provider)
       }
     },
     type: 'injected',
